@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.eShopWeb.Infrastructure.Data;
 using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.Extensions.Configuration;
@@ -26,15 +27,21 @@ public static class Dependencies
         }
         else
         {
+
             // use real database
             // Requires LocalDB which can be installed with SQL Server Express 2016
             // https://www.microsoft.com/en-us/download/details.aspx?id=54284
             services.AddDbContext<CatalogContext>(c =>
                 c.UseSqlServer(configuration.GetConnectionString("CatalogConnection")));
 
+            //services.AddDbContext<CatalogContext>(c =>
+            //    c.UseSqlServer(configuration["CatalogConnection"]));
+
             // Add Identity DbContext
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //    options.UseSqlServer(configuration["IdentityConnection"]));
         }
     }
 }

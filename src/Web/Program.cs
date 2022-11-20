@@ -1,5 +1,6 @@
 ﻿using System.Net.Mime;
 using Ardalis.ListStartupServices;
+using Azure.Identity;
 using BlazorAdmin;
 using BlazorAdmin.Services;
 using Blazored.LocalStorage;
@@ -118,6 +119,10 @@ using (var scope = app.Services.CreateScope())
         app.Logger.LogError(ex, "An error occurred seeding the DB.");
     }
 }
+
+//Azure Vault example
+//var vaultUri = new Uri("https://eshopsecrets.vault.azure.net/");
+//builder.Configuration.AddAzureKeyVault(vaultUri, new DefaultAzureCredential());
 
 var catalogBaseUrl = builder.Configuration.GetValue(typeof(string), "CatalogBaseUrl") as string;
 if (!string.IsNullOrEmpty(catalogBaseUrl))
